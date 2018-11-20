@@ -2,14 +2,28 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.client.ClientBuilder;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("locations")
 public class LocationResource {
 
+    private String baseUrl;
+    private Client httpClient;
+
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        baseUrl = "http://localhost:8080"; // only for demonstration
+    }
+
     @GET
     public Response getAllLocations() {
+
+        System.out.println(getEmployees());
+
         List<Location> locations = Database.getLocations();
         return Response.ok(locations).build();
     }
@@ -36,6 +50,17 @@ public class LocationResource {
         return Response.noContent().build();
     }
 
+
+    private List<Employee> getEmployees() {
+        try {
+            return httpClient
+                    .target(baseUrl + "/v1/employees/1")
+                    .request().get(new GenericType<List<Employee>>() {
+                    });
+        } catch (Exception e) {
+            throw new InternalServerErrorException(e);
+        }
+    }
 
 
 /*
