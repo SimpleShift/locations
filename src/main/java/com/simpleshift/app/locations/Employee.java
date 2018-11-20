@@ -1,3 +1,5 @@
+package com.simpleshift.app.locations;
+
 public class Employee {
 
 
