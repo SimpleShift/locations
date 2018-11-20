@@ -11,14 +11,6 @@ import javax.ws.rs.client.ClientBuilder;
 @Path("locations")
 public class LocationResource {
 
-    private String baseUrl;
-    private Client httpClient;
-
-    private void init() {
-        httpClient = ClientBuilder.newClient();
-        baseUrl = "http://localhost:8080"; // only for demonstration
-    }
-
     @GET
     public Response getAllLocations() {
 
@@ -53,8 +45,8 @@ public class LocationResource {
 
     private List<Employee> getEmployees() {
         try {
-            return httpClient
-                    .target(baseUrl + "/v1/employees/1")
+            return ClientBuilder.newClient()
+                    .target("http://localhost:8080/v1/employees/1")
                     .request().get(new GenericType<List<Employee>>() {
                     });
         } catch (Exception e) {
