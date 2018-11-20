@@ -2,7 +2,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.client.ClientBuilder;
 
@@ -14,9 +13,9 @@ public class LocationResource {
     @GET
     public Response getAllLocations() {
 
-        System.out.println(getEmployees().get(0).getFirstName());
+        List<Employee> locations = getEmployees();
 
-        List<Location> locations = Database.getLocations();
+        //List<Location> locations = Database.getLocations();
         return Response.ok(locations).build();
     }
 
@@ -46,7 +45,7 @@ public class LocationResource {
     private List<Employee> getEmployees() {
         try {
             return ClientBuilder.newClient()
-                    .target("http://localhost:8080/v1/employees/1")
+                    .target("http://localhost:8080/v1/employees")
                     .request().get(new GenericType<List<Employee>>() {
                     });
         } catch (Exception e) {
