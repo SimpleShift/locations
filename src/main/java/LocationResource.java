@@ -14,7 +14,7 @@ public class LocationResource {
     @GET
     public Response getAllLocations() {
 
-        //System.out.println(getEmployees());
+        System.out.println(getEmployees());
 
         List<Location> locations = Database.getLocations();
         return Response.ok(locations).build();
@@ -50,7 +50,8 @@ public class LocationResource {
                     .request().get(new GenericType<List<Employee>>() {
                     });
         } catch (Exception e) {
-            throw new InternalServerErrorException(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
