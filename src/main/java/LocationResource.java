@@ -14,7 +14,7 @@ public class LocationResource {
     @GET
     public Response getAllLocations() {
 
-        System.out.println(getEmployees());
+        System.out.println(getEmployees().get(0).getFirstName());
 
         List<Location> locations = Database.getLocations();
         return Response.ok(locations).build();
