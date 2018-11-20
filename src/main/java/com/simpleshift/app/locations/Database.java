@@ -3,14 +3,14 @@ package com.simpleshift.app.locations;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Database {
+class Database {
     private static List<Location> locations = new ArrayList<Location>();
 
-    public static List<Location> getLocations() {
+    static List<Location> getLocations() {
         return locations;
     }
 
-    public static Location getLocation(String id) {
+    static Location getLocation(String id) {
         for (Location l : locations) {
             if (l.getId().equals(id))
                 return l;
@@ -19,11 +19,11 @@ public class Database {
         return null;
     }
 
-    public static void addLocation(Location e) {
+    static void addLocation(Location e) {
         locations.add(e);
     }
 
-    public static void deleteLocation(String id) {
+    static void deleteLocation(String id) {
         for (Location l : locations) {
             if (l.getId().equals(id)) {
                 locations.remove(l);

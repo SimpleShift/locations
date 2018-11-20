@@ -1,7 +1,7 @@
 package com.simpleshift.app.locations;
 
 
-public class Location {
+class Location {
     private String id;
     private String company;
     private String name;
@@ -12,35 +12,35 @@ public class Location {
     private List<com.simpleshift.app.locations.Employee> employees;
     */
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    void setId(String id) {
         this.id = id;
     }
 
-    public String getCompany() {
+    String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    void setCompany(String company) {
         this.company = company;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    void setAddress(String address) {
         this.address = address;
     }
 }

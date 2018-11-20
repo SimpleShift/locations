@@ -47,7 +47,7 @@ public class LocationResource {
     private List<Employee> getEmployees() {
         try {
             return ClientBuilder.newClient()
-                    .target("http://contemployees:8080/v1/employees")
+                    .target("http://contemployees:8080/v1/employees&locationId=1")
                     .request().get(new GenericType<List<Employee>>() {
                     });
         } catch (Exception e) {
