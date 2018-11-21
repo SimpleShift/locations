@@ -12,8 +12,8 @@ import javax.ws.rs.client.ClientBuilder;
 @Path("locations")
 public class LocationResource {
 
-    private String devPath = "http://localhost:8080/v1/employees&locationId=1";
-    private String dockerPath = "http://contemployees:8080/v1/employees&locationId=1";
+    private String devPath = "http://localhost:8080/v1/employees?locationId=1";
+    private String dockerPath = "http://contemployees:8080/v1/employees?locationId=1";
 
     @GET
     public Response getAllLocations() {
