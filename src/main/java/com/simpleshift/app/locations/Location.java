@@ -1,46 +1,41 @@
 package com.simpleshift.app.locations;
 
 
-class Location {
+public class Location {
     private String id;
     private String company;
     private String name;
     private String address;
 
-    /*
-    @Transient
-    private List<com.simpleshift.app.locations.Employee> employees;
-    */
-
-    String getId() {
+    public String getId() {
         return id;
     }
 
-    void setId(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    String getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    void setCompany(String company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 }

@@ -12,6 +12,9 @@ import javax.ws.rs.client.ClientBuilder;
 @Path("locations")
 public class LocationResource {
 
+    private String devPath = "http://localhost:8080/v1/employees&locationId=1";
+    private String dockerPath = "http://contemployees:8080/v1/employees&locationId=1";
+
     @GET
     public Response getAllLocations() {
 
@@ -47,7 +50,7 @@ public class LocationResource {
     private List<Employee> getEmployees() {
         try {
             return ClientBuilder.newClient()
-                    .target("http://contemployees:8080/v1/employees&locationId=1")
+                    .target(dockerPath)
                     .request().get(new GenericType<List<Employee>>() {
                     });
         } catch (Exception e) {
