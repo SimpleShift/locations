@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locations-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locations
+  template:
+    metadata:
+      labels:
+        app: locations
+    spec:
+      containers:
+      - image: kr3037/simpleshift-locations
+        name: locations
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP
