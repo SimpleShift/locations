@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Database {
-    private static List<Location> locations = new ArrayList<Location>();
+    private static List<Location> locations = new ArrayList<>();
 
     static List<Location> getLocations() {
         return locations;
@@ -15,7 +15,6 @@ class Database {
             if (l.getId().equals(id))
                 return l;
         }
-
         return null;
     }
 

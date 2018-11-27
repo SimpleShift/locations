@@ -14,7 +14,7 @@ import javax.ws.rs.client.ClientBuilder;
 public class LocationResource {
 
     private String devPath = "http://localhost:8080/v1/employees";
-    private String dockerPath = "http://contemployees:8080/v1/employees";
+    private String kubePath = "http://employees:8080/v1/employees";
 
     private Client httpClient = ClientBuilder.newClient();
 
@@ -36,11 +36,12 @@ public class LocationResource {
 
         Location l = Database.getLocation(locationId);
 
-        l.setEmployees(getEmployees(locationId));
-
-        return l != null
-                ? Response.ok(l).build()
-                : Response.status(Response.Status.NOT_FOUND).build();
+        if (l == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            l.setEmployees(getEmployees(locationId));
+            return Response.ok(l).build();
+        }
     }
 
     @POST
@@ -60,9 +61,9 @@ public class LocationResource {
     private List<Employee> getEmployees(String locationId) {
         try {
             return httpClient
-                    .target(dockerPath + "?locationId=" + locationId)
+                    .target(kubePath + "?locationId=" + locationId)
                     .request().get(new GenericType<List<Employee>>() {
-            });
+                    });
         } catch (Exception e) {
             e.printStackTrace();
             return null;
