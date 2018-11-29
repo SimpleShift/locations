@@ -1,22 +1,44 @@
 package com.simpleshift.app.locations;
 
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import org.glassfish.jersey.model.internal.RankedComparator;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.client.ClientBuilder;
 
+@RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("locations")
 public class LocationResource {
 
-    private String devPath = "http://localhost:8080/v1/employees";
-    private String kubePath = "http://employees:8080/v1/employees";
+    @Inject
+    @DiscoverService("employees-service")
+    private Optional<String> baseUrl;
 
-    private Client httpClient = ClientBuilder.newClient();
+    @Inject
+    private AppProperties properties;
+
+    //Staro, samo za test
+    //private String devPath = "http://localhost:8080/v1/employees";
+    //private String kubePath = "http://employees:8080/v1/employees";
+
+    private Client httpClient;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+    }
+
 
     @GET
     public Response getAllLocations() {
@@ -59,14 +81,17 @@ public class LocationResource {
 
 
     private List<Employee> getEmployees(String locationId) {
-        try {
-            return httpClient
-                    .target(kubePath + "?locationId=" + locationId)
-                    .request().get(new GenericType<List<Employee>>() {
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+
+        if (properties.isExternalServicesEnabled() && baseUrl.isPresent()) {
+            try {
+                return httpClient
+                        .target(baseUrl.get() + "/v1/employees?locationId=" + locationId)
+                        .request().get(new GenericType<List<Employee>>() {
+                        });
+            } catch (WebApplicationException | ProcessingException e) {
+                throw new InternalServerErrorException(e);
+            }
         }
+        return null;
     }
 }

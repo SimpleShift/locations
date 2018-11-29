@@ -13,7 +13,7 @@ spec:
         app: locations
     spec:
       containers:
-      - image: kr3037/simpleshift-locations:0.01
+      - image: kr3037/simpleshift-locations:latest
         name: locations
         ports:
         - containerPort: 8081
