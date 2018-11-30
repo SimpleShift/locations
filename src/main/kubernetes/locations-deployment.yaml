@@ -13,13 +13,15 @@ spec:
         app: locations
     spec:
       containers:
-      - image: kr3037/simpleshift-locations:0.04
+      - image: kr3037/simpleshift-locations:0.05
         name: locations
         env:
         - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
           value: http://etcd:2379
         - name: KUMULUZEE_CONFIG_ETCD_HOSTS
           value: http://etcd:2379
+        - name: KUMULUZEE_ENV_NAME
+          value: kum
         ports:
         - containerPort: 8081
           name: server
