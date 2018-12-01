@@ -13,7 +13,7 @@ spec:
         app: locations
     spec:
       containers:
-      - image: kr3037/simpleshift-locations:0.05
+      - image: kr3037/simpleshift-locations:0.06
         name: locations
         env:
         - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
