@@ -21,6 +21,11 @@ kumuluzee:
     ttl: 20
     ping-interval: 15
 
+    metrics:
+      web-instrumentation:
+      - name: locations-endpoint
+        url-pattern: /v1/locations/*
+
 app-properties:
   external-services:
     enabled: true

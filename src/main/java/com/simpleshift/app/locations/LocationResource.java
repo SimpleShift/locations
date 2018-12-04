@@ -1,6 +1,7 @@
 package com.simpleshift.app.locations;
 
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.glassfish.jersey.model.internal.RankedComparator;
 
 import javax.annotation.PostConstruct;
@@ -39,7 +40,7 @@ public class LocationResource {
         httpClient = ClientBuilder.newClient();
     }
 
-
+    @Timed
     @GET
     public Response getAllLocations() {
 
@@ -80,6 +81,7 @@ public class LocationResource {
     }
 
 
+    @Timed(name = "externalEmployees") // Ne prikazuje, zakaj?
     private List<Employee> getEmployees(String locationId) {
 
         if (properties.isExternalServicesEnabled() && baseUrl.isPresent()) {
