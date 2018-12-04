@@ -13,15 +13,19 @@ spec:
         app: locations
     spec:
       containers:
-      - image: kr3037/simpleshift-locations:0.06
+      - image: kr3037/simpleshift-locations:0.07
         name: locations
         env:
+        - name: KUMULUZEE_DISCOVERY_CLUSTER
+          value: bluemix
         - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
           value: http://etcd:2379
         - name: KUMULUZEE_CONFIG_ETCD_HOSTS
           value: http://etcd:2379
+        - name: KUMULUZEE_SERVER_BASEURL
+          value: http://159.122.187.27:31319
         - name: KUMULUZEE_ENV_NAME
-          value: kum
+          value: kub
         ports:
         - containerPort: 8081
           name: server
