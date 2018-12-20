@@ -13,7 +13,7 @@ spec:
         app: locations
     spec:
       containers:
-      - image: kr3037/simpleshift-locations:0.08
+      - image: kr3037/simpleshift-locations:0.09
         name: locations
         env:
         - name: KUMULUZEE_DISCOVERY_CLUSTER

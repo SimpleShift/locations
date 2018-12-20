@@ -24,7 +24,12 @@ public class LocationResource {
 
     @Inject
     @DiscoverService("employees-service")
-    private Optional<String> baseUrl;
+    private Optional<String> employeesUrl;
+
+
+    @Inject
+    @DiscoverService("weather-service")
+    private Optional<String> weatherUrl;
 
     @Inject
     private AppProperties properties;
@@ -48,6 +53,7 @@ public class LocationResource {
 
         for (Location l : locations) {
             l.setEmployees(getEmployees(l.getId()));
+            l.setWeather(getWeather(l.getLat(), l.getLon()));
         }
 
         return Response.ok(locations).build();
@@ -63,6 +69,7 @@ public class LocationResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
             l.setEmployees(getEmployees(locationId));
+            l.setWeather(getWeather(l.getLat(), l.getLon()));
             return Response.ok(l).build();
         }
     }
@@ -84,11 +91,25 @@ public class LocationResource {
     @Timed(name = "externalEmployees") // Ne prikazuje, zakaj?
     private List<Employee> getEmployees(String locationId) {
 
-        if (properties.isExternalServicesEnabled() && baseUrl.isPresent()) {
+        if (properties.isExternalServicesEnabled() && employeesUrl.isPresent()) {
             try {
                 return httpClient
-                        .target(baseUrl.get() + "/v1/employees?locationId=" + locationId)
+                        .target(employeesUrl.get() + "/v1/employees?locationId=" + locationId)
                         .request().get(new GenericType<List<Employee>>() {
+                        });
+            } catch (WebApplicationException | ProcessingException e) {
+                throw new InternalServerErrorException(e);
+            }
+        }
+        return null;
+    }
+
+    private String getWeather(String lat, String lon){
+        if (properties.isExternalServicesEnabled() && weatherUrl.isPresent()) {
+            try {
+                return httpClient
+                        .target(weatherUrl.get() + "/v1/weather?lat=" + lat + "&lon=" + lon)
+                        .request().get(new GenericType<String>() {
                         });
             } catch (WebApplicationException | ProcessingException e) {
                 throw new InternalServerErrorException(e);
