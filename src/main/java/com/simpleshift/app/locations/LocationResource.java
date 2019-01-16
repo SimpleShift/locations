@@ -2,19 +2,20 @@ package com.simpleshift.app.locations;
 
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import org.eclipse.microprofile.metrics.annotation.Timed;
-import org.glassfish.jersey.model.internal.RankedComparator;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.client.ClientBuilder;
 
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
@@ -85,6 +86,30 @@ public class LocationResource {
     public Response deleteLocation(@PathParam("locationId") String locationId) {
         Database.deleteLocation(locationId);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("{locationId}/workingHours")
+    public Response GetWorkingHours(@PathParam("locationId") String locationId) {
+
+        Location l = Database.getLocation(locationId);
+
+        if (l == null) {
+            return  Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+
+            JsonArrayBuilder jab = Json.createArrayBuilder();
+            for (int day : l.getOpenDays()){
+                jab.add(day);
+            }
+
+            String ret = Json.createObjectBuilder()
+                    .add("openDays", jab.build())
+                    .add("openingHour", l.getOpeningHour())
+                    .add("closingHour", l.getClosingHour())
+                    .build().toString();
+            return Response.ok(ret).build();
+        }
     }
 
 

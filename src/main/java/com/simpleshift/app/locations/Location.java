@@ -12,6 +12,10 @@ public class Location {
     private String lon;
     private String weather;
 
+    private List<Integer> openDays;
+    private int openingHour;
+    private int closingHour;
+
     private List<Employee> employees;
 
     public String getId() {
@@ -76,5 +80,29 @@ public class Location {
 
     public void setWeather(String weather) {
         this.weather = weather;
+    }
+
+    public int getOpeningHour() {
+        return openingHour;
+    }
+
+    public void setOpeningHour(int openingHour) {
+        this.openingHour = openingHour;
+    }
+
+    public int getClosingHour() {
+        return closingHour;
+    }
+
+    public void setClosingHour(int closingHout) {
+        this.closingHour = closingHout;
+    }
+
+    public List<Integer> getOpenDays() {
+        return openDays;
+    }
+
+    public void setOpenDays(List<Integer> openDays) {
+        this.openDays = openDays;
     }
 }
